@@ -1,0 +1,37 @@
+digraph course_prereqs1 {
+	CSC469H1 [tooltip="Operating Systems Design and Implementation"]
+	CSC458H1 [tooltip="Computer Networking Systems"]
+	CSC302H1 [tooltip="Engineering Large Software Systems"]
+	CSC317H1 [tooltip="Computer Graphics"]
+	CSC301H1 [tooltip="Introduction to Software Engineering"]
+	CSC404H1 [tooltip="Introduction to Video Game Design"]
+	CSC369H1 [tooltip="Operating Systems"]
+	CSC367H1 [tooltip="Parallel Programming"]
+	CSC385H1 [tooltip="Microprocessor Systems"]
+	CSC443H1 [tooltip="Database System Technology"]
+	CSC419H1 [tooltip="Geometry Processing"]
+	CSC428H1 [tooltip="Human-Computer Interaction"]
+	CSC417H1 [tooltip="Physics-Based Animation"]
+	CSC485H1 [tooltip="Computational Linguistics"]
+	CSC320H1 [tooltip="Introduction to Visual Computing"]
+	CSC209H1 [tooltip="Software Tools and Systems Programming"]
+	CSC309H1 [tooltip="Programming on the Web"]
+	CSC456H1 [tooltip="High-Performance Scientific Computing"]
+	CSC301H1 -> CSC302H1
+	CSC301H1 -> CSC404H1
+	CSC369H1 -> CSC443H1
+	CSC369H1 -> CSC469H1
+	CSC209H1 -> CSC301H1
+	CSC209H1 -> CSC309H1
+	CSC209H1 -> CSC317H1
+	CSC209H1 -> CSC320H1
+	CSC209H1 -> CSC367H1
+	CSC209H1 -> CSC369H1
+	CSC209H1 -> CSC385H1
+	CSC209H1 -> CSC417H1
+	CSC209H1 -> CSC419H1
+	CSC209H1 -> CSC428H1
+	CSC209H1 -> CSC456H1
+	CSC209H1 -> CSC458H1
+	CSC209H1 -> CSC485H1
+}
