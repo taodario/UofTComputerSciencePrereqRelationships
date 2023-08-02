@@ -51,7 +51,7 @@ def serve_image():
         course_code = request.form['course']
         # If the course code is not in the graph, return an error message
         if course_code not in G.nodes:
-            return "Invalid course code entered"
+            return "This course has no requisites, or you may have entered an invalid course code. Please try again"
 
         # Generate the subgraph based on the entered course code
         connected_nodes = list(nx.bfs_tree(G, source=course_code))
