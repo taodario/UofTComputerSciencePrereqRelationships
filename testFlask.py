@@ -1,4 +1,5 @@
 # Import the necessary modules
+import fontTools
 from flask import Flask, render_template, request, send_file  # Flask modules for web app
 from graphviz import Digraph  # To generate graphs
 import json  # To parse JSON
@@ -14,6 +15,12 @@ data = json.loads(raw)
 # Function to plot a graph from a given graph object
 def plot_graph(g):
     plot = Digraph("course_prereqs1", format='png')  # Create a Digraph object
+
+    # Set default font for the graph
+    plot.attr('graph', fontname='Roboto')
+    plot.attr('node', fontname='Roboto')
+    plot.attr('edge', fontname='Roboto')
+
     for v in g.nodes:  # For each node in the graph
         # Add the node to the plot with a tooltip if data is available
         plot.node(v, tooltip=data[v]["title"] if v in data else "")
