@@ -74,30 +74,44 @@ app = Flask(__name__)
 
 
 # Define a route for the web app (the main and only page)
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])  # This route will accept both GET and POST requests
 def serve_image():
-    error = None
-    img_b64 = None
-
     # If the request is a POST request (i.e., the form was submitted)
     if request.method == 'POST':
         # Get the course code from the form
         course_code = request.form['course']
 
-        # If the course code is not in the graph, set an error message
-        if course_code not in G.nodes:
-            error = "This course has no requisites, or you may have entered an invalid course code. Please try again"
-        else:
-            # Generate the subgraph based on the entered course code
-            connected_nodes = list(nx.bfs_tree(G, source=course_code))
-            subgraph = G.subgraph(connected_nodes)
-            # Generate the image from the subgraph
-            img_io = plot_graph(subgraph)
+        # Convert the course code to lower case and check only the first 6 characters
+        course_prefix = course_code.lower()[:6]
 
-            # convert eh BytesIO object to a base64 string
-            img_b64 = b64encode(img_io.getvalue()).decode()
+        # Get list of course codes that match the prefix (also converted to lower case)
+        matched_codes = [code for code in data if code.lower().startswith(course_prefix)]
 
-    return render_template('index.html', img_data=img_b64, error=error)
+        # If the course code is not in the graph, return an error message
+        if not matched_codes:
+            return render_template('index.html', error="This course has no requisites, or you may have entered an invalid course code. Please try again")
+
+        # if multiple matches, just choose the first one (modify as needed)
+        course_code = matched_codes[0]
+
+        # Generate the subgraph based on the entered course code
+        connected_nodes = list(nx.bfs_tree(G, source=course_code))
+        subgraph = G.subgraph(connected_nodes)
+        # Generate the image from the subgraph
+        img_io = plot_graph(subgraph)
+
+        # convert eh BytesIO object to a base64 string
+        img_b64 = b64encode(img_io.getvalue()).decode()
+
+        # pass the base 64 string to the template
+        return render_template('index.html', img_data=img_b64)
+
+    else:
+        # If the request is a GET request (i.e., the page was accessed normally)
+        # Render and return the form page
+        return render_template('index.html')
+
+
 
 
 # If the file is being run directly (not being imported)
