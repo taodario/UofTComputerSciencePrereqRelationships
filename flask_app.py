@@ -42,35 +42,63 @@ for code, vals in data.items():  # For each item in the data
 # Create a new Flask web application
 app = Flask(__name__)
 
+# # Define a route for the web app (the main and only page)
+# @app.route('/', methods=['GET', 'POST'])  # This route will accept both GET and POST requests
+# def serve_image():
+#     # If the request is a POST request (i.e., the form was submitted)
+#     if request.method == 'POST':
+#         # Get the course code from the form
+#         course_code = request.form['course']
+#         # If the course code is not in the graph, return an error message
+#         if course_code not in G.nodes:
+#             return "This course has no requisites, or you may have entered an invalid course code. Please try again"
+#
+#         # Generate the subgraph based on the entered course code
+#         connected_nodes = list(nx.bfs_tree(G, source=course_code))
+#         subgraph = G.subgraph(connected_nodes)
+#         # Generate the image from the subgraph
+#         img_io = plot_graph(subgraph)
+#
+#         # convert eh BytesIO object to a base64 string
+#         img_b64 = b64encode(img_io.getvalue()).decode()
+#
+#         # pass the base 64 string to the template
+#         return render_template('index.html', img_data=img_b64)
+#
+#         # # Return the image as a response
+#         # return send_file(img_io, mimetype='image/png')
+#     else:
+#         # If the request is a GET request (i.e., the page was accessed normally)
+#         # Render and return the form page
+#         return render_template('index.html')
+
+
 # Define a route for the web app (the main and only page)
-@app.route('/', methods=['GET', 'POST'])  # This route will accept both GET and POST requests
+@app.route('/', methods=['GET', 'POST'])
 def serve_image():
+    error = None
+    img_b64 = None
+
     # If the request is a POST request (i.e., the form was submitted)
     if request.method == 'POST':
         # Get the course code from the form
         course_code = request.form['course']
-        # If the course code is not in the graph, return an error message
+
+        # If the course code is not in the graph, set an error message
         if course_code not in G.nodes:
-            return "This course has no requisites, or you may have entered an invalid course code. Please try again"
+            error = "This course has no requisites, or you may have entered an invalid course code. Please try again"
+        else:
+            # Generate the subgraph based on the entered course code
+            connected_nodes = list(nx.bfs_tree(G, source=course_code))
+            subgraph = G.subgraph(connected_nodes)
+            # Generate the image from the subgraph
+            img_io = plot_graph(subgraph)
 
-        # Generate the subgraph based on the entered course code
-        connected_nodes = list(nx.bfs_tree(G, source=course_code))
-        subgraph = G.subgraph(connected_nodes)
-        # Generate the image from the subgraph
-        img_io = plot_graph(subgraph)
+            # convert eh BytesIO object to a base64 string
+            img_b64 = b64encode(img_io.getvalue()).decode()
 
-        # convert eh BytesIO object to a base64 string
-        img_b64 = b64encode(img_io.getvalue()).decode()
+    return render_template('index.html', img_data=img_b64, error=error)
 
-        # pass the base 64 string to the template
-        return render_template('index.html', img_data=img_b64)
-
-        # # Return the image as a response
-        # return send_file(img_io, mimetype='image/png')
-    else:
-        # If the request is a GET request (i.e., the page was accessed normally)
-        # Render and return the form page
-        return render_template('index.html')
 
 # If the file is being run directly (not being imported)
 if __name__ == '__main__':

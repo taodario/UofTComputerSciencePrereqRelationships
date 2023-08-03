@@ -54,9 +54,22 @@
             box-sizing: border-box;
             width: 100vw;
         }
-
         .banner h1 {
             color: white;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-msg {
+            height: 1em;
         }
     </style>
 
@@ -79,10 +92,21 @@
 
 <h2>Enter Course Code</h2>
 
+<!--<form action="/" method="post">-->
+<!--    <input type="text" id="course" name="course" placeholder="CSC108H1">-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
+
 <form action="/" method="post">
-    <input type="text" id="course" name="course" placeholder="CSC108H1">
-    <input type="submit" value="Submit">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="text" id="course" name="course" placeholder="CSC108H1">
+            <input type="submit" value="Submit">
+        </div>
+        <p class="error-msg" style="color: red;">{% if error %}{{ error }}{% endif %}</p>
+    </div>
 </form>
+
 
 <br><br><br><br>
 
