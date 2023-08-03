@@ -29,13 +29,9 @@
         }
         /* Add a rule for the image container */
         .img-container {
-            width: 100%; /* Take up the full width of its parent */
-            display: flex; /* Enable flexbox layout */
-            justify-content: center; /* Center content horizontally */
-            overflow-x: auto; /* Add a scrollbar when the content overflows */
-            margin: 0 auto; /* Center the container */
+            width: 100%;
+            overflow-x: auto;
         }
-
         /*to show available course codes to search*/
         #toggle {
             cursor: pointer;
@@ -83,6 +79,18 @@
                 $("#course-codes").toggle(); /* Toggle the visibility of course codes */
             });
         });
+
+        window.onload = function() {
+            var image = document.getElementById('generatedImage');
+            var container = document.getElementsByClassName('img-container')[0];
+
+            // If the image's width is less than its container's width
+            if(image.offsetWidth < container.offsetWidth){
+                // Set CSS to center it
+                image.style.margin = "auto";
+                image.style.display = "block";
+            }
+        };
     </script>
 
 </head>
@@ -109,14 +117,12 @@
     </div>
 </form>
 
-
-<br><br><br><br>
-
 <!-- Display the image below the form -->
 {% if img_data %}
 <div class="img-container">
-    <img src="data:image/png;base64,{{ img_data }}">
+    <img id="generatedImage" src="data:image/png;base64,{{ img_data }}">
 </div>
+
 {% endif %}
 
 <!--for showing available course codes.-->
