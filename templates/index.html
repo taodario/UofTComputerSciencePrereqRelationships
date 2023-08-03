@@ -3,7 +3,9 @@
 
 <head>
     <title>Requisite Relationships</title>
-    <link rel="icon" href="static/nodesfavicon.ico" type="image/x-icon">
+<!--    <link rel="icon" href="{{ url_for('static', filename='icons8-favicon-32.png') }}" type="image/png">-->
+<!--    <link rel="shortcut icon" href="nodesfavicon.ico">-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +19,10 @@
             flex-direction: column;
             align-items: center;
             margin-top: 50px;
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         form {
             margin-bottom: 2em;
@@ -41,6 +47,17 @@
             width: 70%;
             /*margin: 0 auto;*/
         }
+        .banner {
+            background-color: #1e3765;
+            padding: 20px;
+            text-align: center;
+            box-sizing: border-box;
+            width: 100vw;
+        }
+
+        .banner h1 {
+            color: white;
+        }
     </style>
 
 <!--    for toggle button-->
@@ -56,7 +73,9 @@
 </head>
 
 <body>
-<h1>UofT Requisite Relationships</h1>
+<div class="banner">
+    <h1>Coursify - UofT Requisite Relationships</h1>
+</div>
 
 <h2>Enter Course Code</h2>
 
